@@ -1,46 +1,65 @@
 """
-GOAL:
-    Simple calculator (add, subtract, multiply, divide).
+Project: Basic Calculator
 
-PRACTICE:
-    Functions, basic operators, conditionals, error handling, input/output.
+Skills practiced:
+- Functions and parameters
+- Conditional logic (if/else)
+- Exception handling (try/except)
+- Dictionary for function mapping
+- Input validation and error messages
+- Type casting (str to float/int)
+- Basic arithmetic operations
+- Program structure with main()
 """
+
 
 def add(a, b):
     return a + b
 
-def subtraction(a, b):
+def subtract(a, b):
     return a - b
 
-def product(a, b):
+def multiply(a, b):
     return a * b
 
-def division(a, b):
+def divide(a, b):
     if b == 0:
-        print("Error! Division by zero.")
-        return None
+        raise ValueError("Erro! Divisão por zero não é permitida.")
     return a / b
 
-a = int(input("Enter the first number: "))
-b = int(input("Enter the second number: "))
+def main():
+    operations = {
+        1: add,
+        2: subtract,
+        3: multiply,
+        4: divide
+    }
 
-print("\nChoose the operation you want to perform:")
-print("[1] Sum")
-print("[2] Subtraction")
-print("[3] Product")
-print("[4] Division")
+    try:
+        num1 = float(input("Enter the first number: "))
+        num2 = float(input("Enter the second number: "))
+    except ValueError:
+        print("Entrada inválida. Por favor, insira números válidos.")
+        return
 
-op = int(input("Option: "))
+    print("\nChoose the operation you want to perform:")
+    print("[1] Sum")
+    print("[2] Subtraction")
+    print("[3] Product")
+    print("[4] Division")
 
-if op == 1:
-    print(f"Result: {add(a, b)}")
-elif op == 2:
-    print(f"Result: {subtraction(a, b)}")
-elif op == 3:
-    print(f"Result: {product(a, b)}")
-elif op == 4:
-    result = division(a, b)
-    if result is not None:
+    try:
+        choice = int(input("Option: "))
+        operation_func = operations[choice]
+    except (ValueError, KeyError):
+        print("Opção inválida.")
+        return
+
+    try:
+        result = operation_func(num1, num2)
         print(f"Result: {result}")
-else:
-    print("Invalid option.")
+    except ValueError as e:
+        print(e)
+
+if __name__ == "__main__":
+    main()
